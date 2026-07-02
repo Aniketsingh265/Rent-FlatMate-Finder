@@ -1,5 +1,11 @@
 require("dotenv").config();
 
+// Some hosts (e.g. Render) can't route outbound IPv6, but Node's net.connect()
+// resolves hostnames via dns.lookup(), which defaults to preferring IPv6 (AAAA)
+// records. This caused ENETUNREACH when connecting to Gmail's SMTP server.
+// Forcing IPv4-first here fixes it globally for every outbound connection.
+require("dns").setDefaultResultOrder("ipv4first");
+
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");

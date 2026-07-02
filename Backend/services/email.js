@@ -8,9 +8,6 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
-  // Force IPv4 - some hosts (e.g. Render) fail to route outbound IPv6,
-  // causing ENETUNREACH when Node resolves smtp.gmail.com to an AAAA record.
-  family: 4,
 });
 
 const sendEmail = async ({ to, subject, html, replyTo }) => {
