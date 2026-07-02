@@ -10,13 +10,14 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const sendEmail = async ({ to, subject, html }) => {
+const sendEmail = async ({ to, subject, html, replyTo }) => {
   try {
     await transporter.sendMail({
       from: `"Rent & Flatmate Finder" <${process.env.EMAIL_USER}>`,
       to,
       subject,
       html,
+      ...(replyTo && { replyTo }),
     });
     console.log(`📧 Email sent to ${to}`);
   } catch (err) {
@@ -35,11 +36,12 @@ const notifyOwnerOfInterest = async (owner, tenant, listing, score) => {
       <p>Compatibility Score: <strong>${score}/100</strong></p>
       <p>Login to accept or decline their request.</p>
     `,
+    replyTo: tenant.email,
   });
 };
 
 // Notify tenant when owner accepts their interest
-const notifyTenantAccepted = async (tenant, listing) => {
+const notifyTenantAccepted = async (tenant, listing, ownerEmail) => {
   await sendEmail({
     to: tenant.email,
     subject: ` Your interest was accepted!`,
@@ -48,11 +50,12 @@ const notifyTenantAccepted = async (tenant, listing) => {
       <p>The owner of <strong>${listing.title}</strong> has accepted your interest.</p>
       <p>You can now chat with them directly. Login to start the conversation!</p>
     `,
+    replyTo: ownerEmail,
   });
 };
 
 // Notify tenant when owner declines their interest
-const notifyTenantDeclined = async (tenant, listing) => {
+const notifyTenantDeclined = async (tenant, listing, ownerEmail) => {
   await sendEmail({
     to: tenant.email,
     subject: `Interest update for ${listing.title}`,
@@ -61,6 +64,7 @@ const notifyTenantDeclined = async (tenant, listing) => {
       <p>Unfortunately, the owner of <strong>${listing.title}</strong> has declined your interest.</p>
       <p>Don't worry — keep browsing other listings!</p>
     `,
+    replyTo: ownerEmail,
   });
 };
 

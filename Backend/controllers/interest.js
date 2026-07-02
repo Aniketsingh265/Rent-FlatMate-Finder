@@ -52,9 +52,9 @@ const respondToInterest = async (req, res) => {
     await interest.save();
 
     if (status === "accepted") {
-      await notifyTenantAccepted(interest.tenant, interest.listing);
+      await notifyTenantAccepted(interest.tenant, interest.listing, req.user.email);
     } else if (status === "declined") {
-      await notifyTenantDeclined(interest.tenant, interest.listing);
+      await notifyTenantDeclined(interest.tenant, interest.listing, req.user.email);
     }
 
     res.json({ success: true, interest });
