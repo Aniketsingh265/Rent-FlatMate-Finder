@@ -1,0 +1,53 @@
+.admin-container { max-width: 1100px; margin: 2rem auto; padding: 0 2rem; }
+
+.admin-header { margin-bottom: 2rem; }
+.admin-header h1 {
+  font-size: 2rem; font-weight: 700;
+  background: var(--gradient); -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; background-clip: text;
+}
+.admin-header p { color: var(--text-light); }
+
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+
+.stat-card {
+  border-radius: var(--radius); padding: 1.75rem; text-align: center;
+  box-shadow: var(--shadow); color: white;
+}
+.stat-card.purple { background: var(--gradient); }
+.stat-card.blue { background: linear-gradient(135deg, #3b82f6, #06b6d4); }
+.stat-card.orange { background: var(--gradient-warm); }
+
+.stat-number { font-size: 2.5rem; font-weight: 700; }
+.stat-label { font-size: 0.9rem; opacity: 0.85; margin-top: 0.25rem; }
+
+.admin-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; }
+.admin-tabs button {
+  padding: 0.6rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.95rem;
+  background: white; color: var(--text-light); border: 2px solid var(--border); transition: all 0.2s;
+}
+.admin-tabs button.active { background: var(--gradient); color: white; border-color: transparent; }
+
+.admin-table-wrap { background: white; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+
+.admin-table { width: 100%; border-collapse: collapse; }
+.admin-table th {
+  background: #f5f3ff; padding: 1rem 1.25rem; text-align: left;
+  font-size: 0.85rem; font-weight: 600; color: var(--primary); text-transform: uppercase;
+}
+.admin-table td { padding: 1rem 1.25rem; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
+.admin-table tr:last-child td { border-bottom: none; }
+.admin-table tr:hover td { background: #fafafa; }
+
+.role-tag {
+  padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;
+}
+.role-tag.tenant { background: #ede9fe; color: #7c3aed; }
+.role-tag.owner { background: #fef3c7; color: #d97706; }
+.role-tag.admin { background: #fee2e2; color: #dc2626; }
+
+.btn-del {
+  padding: 0.35rem 0.85rem; background: #fee2e2; color: #dc2626;
+  border-radius: 6px; font-size: 0.85rem; font-weight: 600; transition: background 0.2s;
+}
+.btn-del:hover { background: #fecaca; }

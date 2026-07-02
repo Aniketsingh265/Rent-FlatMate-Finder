@@ -1,0 +1,172 @@
+.listings-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.listings-hero {
+  text-align: center;
+  padding: 2rem 0;
+  margin-bottom: 1.5rem;
+}
+
+.listings-hero h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.listings-hero p {
+  color: var(--text-light);
+  margin-top: 0.5rem;
+}
+
+.filters-bar {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  background: white;
+  padding: 1.25rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 2rem;
+}
+
+.filters-bar input,
+.filters-bar select {
+  flex: 1;
+  min-width: 140px;
+  padding: 0.65rem 1rem;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.filters-bar input:focus,
+.filters-bar select:focus {
+  border-color: var(--primary);
+}
+
+.btn-search {
+  padding: 0.65rem 1.5rem;
+  background: var(--gradient);
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: opacity 0.2s;
+}
+
+.btn-search:hover { opacity: 0.9; }
+
+.listings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.listing-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: block;
+  border: 2px solid transparent;
+  overflow: hidden;
+}
+
+.listing-card-photo {
+  display: block;
+  width: calc(100% + 3rem);
+  height: 160px;
+  object-fit: cover;
+  margin: -1.5rem -1.5rem 1rem -1.5rem;
+}
+
+.listing-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary-light);
+  box-shadow: 0 8px 30px rgba(124, 58, 237, 0.2);
+}
+
+.listing-card-header {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.badge {
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge.single { background: #ede9fe; color: #7c3aed; }
+.badge.shared { background: #fef3c7; color: #d97706; }
+.badge.furnished { background: #d1fae5; color: #065f46; }
+
+.listing-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.listing-location {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.listing-rent {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0.75rem;
+}
+
+.compat-score {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.compat-bar {
+  flex: 1;
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.compat-fill {
+  height: 100%;
+  background: var(--gradient);
+  border-radius: 3px;
+  transition: width 0.5s;
+}
+
+.compat-score span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--primary);
+  white-space: nowrap;
+}
+
+.listing-owner {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+.loading-spinner, .empty-state {
+  text-align: center;
+  padding: 4rem;
+  color: var(--text-light);
+  font-size: 1.1rem;
+}
