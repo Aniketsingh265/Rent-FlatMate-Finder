@@ -1,6 +1,18 @@
 const jwt = require("jsonwebtoken");
 const Message = require("../models/message");
 const User = require("../models/user");
+const Interest = require("../models/interest");
+
+// A socket may only join/message a chat if its user is the tenant or owner
+// on that interest, and the interest has been accepted.
+const canAccessInterest = async (userId, interestId) => {
+  const interest = await Interest.findById(interestId);
+  if (!interest || interest.status !== "accepted") return false;
+  return (
+    interest.tenant.toString() === userId.toString() ||
+    interest.owner.toString() === userId.toString()
+  );
+};
 
 module.exports = (io) => {
   // Auth middleware for socket
@@ -20,7 +32,10 @@ module.exports = (io) => {
     console.log(`🔌 User connected: ${socket.user?.name}`);
 
     // Join a chat room (based on interest ID)
-    socket.on("join_room", (interestId) => {
+    socket.on("join_room", async (interestId) => {
+      if (!(await canAccessInterest(socket.user._id, interestId))) {
+        return socket.emit("error", { message: "Access denied to this chat" });
+      }
       socket.join(interestId);
       console.log(`📬 ${socket.user.name} joined room: ${interestId}`);
     });
@@ -28,6 +43,10 @@ module.exports = (io) => {
     // Send a message
     socket.on("send_message", async ({ interestId, content }) => {
       try {
+        if (!(await canAccessInterest(socket.user._id, interestId))) {
+          return socket.emit("error", { message: "Access denied to this chat" });
+        }
+
         const message = await Message.create({
           interest: interestId,
           sender: socket.user._id,
@@ -45,6 +64,7 @@ module.exports = (io) => {
 
     // Mark messages as read
     socket.on("mark_read", async ({ interestId }) => {
+      if (!(await canAccessInterest(socket.user._id, interestId))) return;
       await Message.updateMany(
         { interest: interestId, readBy: { $ne: socket.user._id } },
         { $push: { readBy: socket.user._id } }
