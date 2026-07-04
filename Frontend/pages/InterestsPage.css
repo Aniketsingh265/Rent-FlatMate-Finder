@@ -42,6 +42,10 @@
 }
 .btn-decline:hover { background: #fecaca; }
 
+.btn-accept:disabled, .btn-decline:disabled {
+  opacity: 0.6; cursor: not-allowed;
+}
+
 .btn-chat {
   padding: 0.5rem 1.25rem; background: var(--gradient); color: white;
   border-radius: 6px; font-weight: 600; font-size: 0.9rem; transition: opacity 0.2s;

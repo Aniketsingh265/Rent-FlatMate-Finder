@@ -10,6 +10,7 @@ export default function InterestsPage() {
   const navigate = useNavigate();
   const [interests, setInterests] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [respondingId, setRespondingId] = useState(null);
 
   const fetchInterests = async () => {
     try {
@@ -25,12 +26,15 @@ export default function InterestsPage() {
   useEffect(() => { fetchInterests(); }, []);
 
   const handleRespond = async (id, status) => {
+    setRespondingId(id);
     try {
       await respondInterest(id, status);
       toast.success(`Interest ${status}`);
-      fetchInterests();
+      await fetchInterests();
     } catch {
       toast.error("Failed");
+    } finally {
+      setRespondingId(null);
     }
   };
 
@@ -69,8 +73,14 @@ export default function InterestsPage() {
               <div className="interest-actions">
                 {user.role === "owner" && i.status === "pending" && (
                   <>
-                    <button className="btn-accept" onClick={() => handleRespond(i._id, "accepted")}>Accept</button>
-                    <button className="btn-decline" onClick={() => handleRespond(i._id, "declined")}>Decline</button>
+                    <button className="btn-accept" disabled={respondingId === i._id}
+                      onClick={() => handleRespond(i._id, "accepted")}>
+                      {respondingId === i._id ? "Processing..." : "Accept"}
+                    </button>
+                    <button className="btn-decline" disabled={respondingId === i._id}
+                      onClick={() => handleRespond(i._id, "declined")}>
+                      {respondingId === i._id ? "Processing..." : "Decline"}
+                    </button>
                   </>
                 )}
                 {i.status === "accepted" && (
